@@ -16,11 +16,16 @@ def results():
     return render_template('results.html')
 
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['GET', 'POST'])
 def search():
-    search_params = request.get_json()
-    search_results = youtube.search(search_params['search'])    
-    return jsonify({'results': search_results})
+    search_results = []
+    print(f'\n{request.args}\n')
+    if request.method == 'POST':
+        search_params = request.get_json()
+        search_results = youtube.search(search_params['search'])    
+        return jsonify({'results': search_results})
+    return jsonify({'data': 'received'})
+    
 
 
 

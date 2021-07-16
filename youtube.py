@@ -14,12 +14,14 @@ class Youtube:
         result_list = []
         request = self.youtube.search().list(
             part='snippet',
-            maxResults=20,
+            maxResults=1,
             q=param
         )
         response = request.execute()
-        results = response['items']
-        return self.gen_response(results)
+        # results = response['items']
+        print('NEXT PAGE TOKEN: ', response['nextPageToken'])
+        return response
+        # return self.gen_response(results)
 
 
 
@@ -93,3 +95,8 @@ class Youtube:
                 self.display_dict(value)
             print(key, ' : ',  value, '\n')
 
+
+youtube = Youtube()
+result = youtube.search('girls')
+
+print(result)

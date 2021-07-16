@@ -34,12 +34,12 @@
             </div>
         </div>
         <div class="right">
-            <div class="form-container">
+            <form action="{{ url_for('search') }}" method="GET" class="form-container">
                 <div class="form-control">
-                    <input type="text" placeholder="Enter Video Name" id="video-input" class="form-input">
+                    <input type="text" name="video_name" placeholder="Enter Video Name" id="video-input" class="form-input">
                 </div>
                 <div class="form-control">
-                    <input type="text" placeholder="Enter Location" id="location-input" class="form-input">
+                    <input type="text" name="location" placeholder="Enter Location" id="location-input" class="form-input">
                 </div>
                 <div class="form-control">
                     <p>Subscribers</p>
@@ -50,14 +50,14 @@
                     </div>
                     <div class="range-slider">
                         <div class="slider-track"></div>
-                        <input type="range" min="0" max="100000" id="slider-1" value="30000" oninput="slideOne()">
-                        <input type="range" min="0" max="100000" id="slider-2" value="70000" oninput="slideTwo()">
+                        <input type="range" name="min" min="0" max="100000" id="slider-1" value="30000" oninput="slideOne()">
+                        <input type="range" name="max" min="0" max="100000" id="slider-2" value="70000" oninput="slideTwo()">
                     </div>
                 </div>
                 <div class="form-control">
                     <button type="submit" id="submit-btn">Search</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

@@ -44,23 +44,29 @@ function getSearchData() {
 function fetchResults() {
     data = getSearchData()
     console.log(data)
-    fetch('/search', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
+        // fetch('/search', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(data)
+        //     })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         response = data['results']
+        //         updateResults
+        //     })
+    fetch(`/search?keyword={data['search]}`)
         .then(res => res.json())
         .then(data => {
-            response = data['results']
+            console.log(data)
         })
 }
 
 
-searchButton.addEventListener('click', () => {
-    fetchResults()
-})
+// searchButton.addEventListener('click', () => {
+//     fetchResults()
+// })
 
 
 
