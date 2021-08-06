@@ -1,8 +1,12 @@
 from googleapiclient.discovery import build
 api_key = 'AIzaSyAtHJLGKxFHUxv1iZ1cHUS9UvBdqEt0zBA'
+# api_key = 'AIzaSyDVRjlPcJiSscO7KxkkfOmAAS1Ksoy6YrY'
 
 
 class Youtube:
+    min_results = 15
+    max_results = 500
+
     def __init__(self, api_name='youtube', api_version='v3', api_key=api_key):
         self.api_name = api_name
         self.api_version = api_version
@@ -10,19 +14,74 @@ class Youtube:
         self.youtube = build(serviceName=self.api_name, version=self.api_version, developerKey=self.api_key)
 
 
-    def search(self, param):
-        result_list = []
-        request = self.youtube.search().list(
-            part='snippet',
-            maxResults=1,
-            q=param
-        )
-        response = request.execute()
-        # results = response['items']
-        print('NEXT PAGE TOKEN: ', response['nextPageToken'])
-        return response
-        # return self.gen_response(results)
+    def get_search_data(self, response_items):
+        results = []
+        if not response_items:
+            return []
+        for res in response_items:
+            video_id = res['id'].get('videoId', None)
+            if video_id is None:
+                continue
+            video_link = self.gen_video_link(video_id)
+            video_item = self.video(video_id)
+            channel_id = video_item['snippet']['channelId']
+            channel_link = self.gen_channel_link(channel_id)
+            channel = self.channel(channel_id)
 
+            data = {}
+            snippet = res['snippet']
+            
+            data['title'] = snippet['title']
+            data['thumbnail'] = snippet['thumbnails']['high']['url']
+            data['channel'] = snippet['channelTitle']
+            data['channel_link'] = channel_link
+            data['video_link'] = video_link
+            data['subscribers'] = int(channel['statistics'].get('subscriberCount', 0))
+
+            results.append(data)
+        return results
+
+
+    def filter_search_results(self, results, min, max):
+        return list(filter(lambda x: x['subscribers'] > min and x['subscribers'] <= max, results))
+    
+
+    def search(self, param, location, min=0, max=10**10):
+        result_list = []
+        search_args = dict(part="snippet", maxResults=self.max_results, q=param, type="video",
+            location=f"{str(location[0])},{str(location[1])}", locationRadius="10mi")
+        if not all(location):
+
+            print('\n\n Removed locations \n\n')
+            search_args.pop('location')
+            search_args.pop('locationRadius')
+        request = self.youtube.search().list(**search_args)
+        response = request.execute()
+        video_data = self.get_search_data(response['items'])
+        result_list = self.filter_search_results(video_data, min, max)
+        return result_list
+    
+
+    def search_example(self, param):
+        results = []
+        counter = 0
+        token = None                
+        while len(results) < 7:
+            request = self.youtube.search().list(
+                part='snippet',
+                maxResults = 2,
+                q=param,
+                type="video",
+                pageToken=token
+            )
+            response = request.execute()
+            token = response['nextPageToken']
+            results.extend(self.run_details(response['items']))
+            counter += 1
+            print('Counter: ', counter)
+
+        for i in results:
+            print(i, '\n')
 
 
     def response_obj(self, video_data, channel_data):
@@ -52,7 +111,7 @@ class Youtube:
             id=video_id
         )
         response = request.execute()
-        return response['items']
+        return response['items'][0]
 
 
     def channel(self, id):
@@ -61,7 +120,7 @@ class Youtube:
             id=id
         )
         response = request.execute()
-        return response['items']
+        return response['items'][0]
 
 
     def get_data(self, video_obj):
@@ -69,11 +128,8 @@ class Youtube:
         stats = video_obj['statistics']
         snippet = video_obj['snippet']
         _d['id'] = video_obj['id']
-        _d['likes'] = stats['likeCount']
         _d['views'] = stats['viewCount']
-        _d['comments'] = stats['commentCount']
         _d['title'] = snippet['title']
-        _d['description'] = snippet['description']
         _d['channel'] = snippet['channelTitle']
         _d['channelId'] = snippet['channelId']
         _d['thumbnail'] = snippet['thumbnails']['high']['url']
@@ -87,16 +143,3 @@ class Youtube:
     def gen_channel_link(self, channel_id):
         return f"https://www.youtube.com/channel/{channel_id}"
 
-    
-    def display_dict(self, d):
-        for key, value in d.items():
-            print(type(value))
-            if type(value) == 'dict':
-                self.display_dict(value)
-            print(key, ' : ',  value, '\n')
-
-
-youtube = Youtube()
-result = youtube.search('girls')
-
-print(result)

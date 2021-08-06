@@ -7,7 +7,7 @@ let sliderOne = document.querySelector('#slider-1')
 let sliderTwo = document.querySelector('#slider-2')
 let displayValOne = document.querySelector('#range-1')
 let displayValTwo = document.querySelector('#range-2')
-let minGap = 100
+let minGap = 150
 
 function slideOne() {
     if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
@@ -19,6 +19,10 @@ function slideOne() {
 function slideTwo() {
     if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
         sliderTwo.value = parseInt(sliderOne.value) + minGap
+    }
+    if (parseInt(sliderTwo.value) > 9999) {
+        displayValTwo.textContent = '10000+'
+        return
     }
     displayValTwo.textContent = sliderTwo.value
 }
@@ -73,3 +77,19 @@ function fetchResults() {
 function cardComponent() {
     return ``
 }
+
+function submitForm() {
+    let searchField = document.querySelector('#video-input')
+    let locationField = document.querySelector('#location-input')
+    if (searchField.value.trim() == '') {
+        searchField.classList.add('error')
+        searchField.setAttribute('placeholder', "Search field can't be empty")
+        return
+    }
+    document.querySelector('form').submit()
+}
+
+
+document.querySelector('#submit-btn').addEventListener('click', () => {
+    submitForm()
+})

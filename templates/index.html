@@ -1,10 +1,11 @@
 {% extends 'base.html' %} {% block content %}
+
 <div class="search-section">
     <h1 class="pb-2">SEARCH</h1>
     <div class="row space-between">
-        <div class="left">
-            <div class="seach-features">
-                <div class="search-item mb-2">
+        <form action="{{ url_for('search') }}" method="GET">
+            <div class="s-item mb-2">
+                <div class="search-item left">
                     <div class="icon">
                         <i class="ti-location-pin"></i>
                     </div>
@@ -13,7 +14,12 @@
                         <p>Enter a video name like american rappers</p>
                     </div>
                 </div>
-                <div class="search-item mb-2">
+                <div class="form-control right">
+                    <input type="text" name="video_name" placeholder="Enter Video Name" id="video-input" class="form-input">
+                </div>
+            </div>
+            <div class="s-item mb-2">
+                <div class="search-item left">
                     <div class="icon">
                         <i class="ti-email"></i>
                     </div>
@@ -22,7 +28,12 @@
                         <p>Enter a city like Chicago</p>
                     </div>
                 </div>
-                <div class="search-item">
+                <div class="form-control right">
+                    <input type="text" name="location" placeholder="Enter Location" id="location-input" required class="form-input" onfocus="geolocate()">
+                </div>
+            </div>
+            <div class="s-item mb-2">
+                <div class="search-item left">
                     <div class="icon">
                         <i class="ti-mobile"></i>
                     </div>
@@ -31,17 +42,9 @@
                         <p>Choose a subscribers range</p>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="right">
-            <form action="{{ url_for('search') }}" method="GET" class="form-container">
-                <div class="form-control">
-                    <input type="text" name="video_name" placeholder="Enter Video Name" id="video-input" class="form-input">
-                </div>
-                <div class="form-control">
-                    <input type="text" name="location" placeholder="Enter Location" id="location-input" class="form-input">
-                </div>
-                <div class="form-control">
+                <input type="hidden" id="lat" name="lat" value="">
+                <input type="hidden" id="lng" name="lng" value="">
+                <div class="form-control right">
                     <p>Subscribers</p>
                     <div class="values">
                         <span id="range-1">0</span>
@@ -50,15 +53,39 @@
                     </div>
                     <div class="range-slider">
                         <div class="slider-track"></div>
-                        <input type="range" name="min" min="0" max="100000" id="slider-1" value="30000" oninput="slideOne()">
-                        <input type="range" name="max" min="0" max="100000" id="slider-2" value="70000" oninput="slideTwo()">
+                        <input type="range" name="min" min="0" max="10000" id="slider-1" value="3000" oninput="slideOne()">
+                        <input type="range" name="max" min="0" max="10000" id="slider-2" value="7000" oninput="slideTwo()">
                     </div>
                 </div>
-                <div class="form-control">
-                    <button type="submit" id="submit-btn">Search</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="form-control mt-2">
+                <button type="button" id="submit-btn">Search</button>
+            </div>
+        </form>
+
     </div>
 </div>
+<script>
+    let autoComplete;
+    let lat = document.querySelector('#lat')
+    let lng = document.querySelector('#lng')
+
+    function initAutocomplete() {
+        let locationInput = document.querySelector('#location-input')
+        autoComplete = new google.maps.places.Autocomplete(locationInput, {
+            types: ['geocode']
+        })
+        google.maps.event.addListener(autoComplete, 'place_changed', function() {
+            let nearPlace = autoComplete.getPlace()
+            place_location = nearPlace.geometry.location
+            console.log(place_location.lat(), place_location.lng())
+            lat.value = place_location.lat()
+            lng.value = place_location.lng()
+        })
+    }
+</script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtHJLGKxFHUxv1iZ1cHUS9UvBdqEt0zBA&libraries=places&callback=initAutocomplete" async defer></script>
 {% endblock content %}
+
+<!-- AIzaSyAtHJLGKxFHUxv1iZ1cHUS9UvBdqEt0zBA -->

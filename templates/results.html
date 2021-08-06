@@ -4,120 +4,54 @@
     <div class="filter-items">
         <div class="row">
             <div>
-                <p><b>VideoName: </b>#american rappers</p>
+                <p><b>VideoName: </b>{{ search }}</p> 
             </div>
             <div class="mr ml">|</div>
             <div>
-                <p><b>Location: </b>Chicago</p>
+                <p><b>Location: </b>{{ location }}</p>
             </div>
             <div class="mr ml">|</div>
             <div>
-                <p><b>Subscribers: </b>2000-10000</p>
+                <p><b>Subscribers: </b>{{ min_subs }}-{{ max_subs }}</p>
             </div>
         </div>
     </div>
     <div class="filter-post">
         <div class="row space-between">
-            <div class="post-item">
+            {% for result in results %}
+            <div class="post-item" data-aos="fade-up">
+                <div class="post-details">
+                    <div>
+                        <div class="post-detail-item mr-1">
+                            <a href="{{ result['video_link'] }}" target="_blank"><i class="ti-control-play"></i></a>
+                            <p>Visit Video</p>
+                        </div>
+                        <div class="post-detail-item">
+                            <a href="{{ result['channel_link'] }}" target="_blank"><i class="ti-new-window"></i></a>
+                            <p>Visit Channel</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="post-img">
-                    <img src="../static/images/img_1.jpg" alt="">
+                    <img src="{{ result['thumbnail'] }}" alt="thubmnail">
                 </div>
                 <div class="post-info">
-                    <p><b>Title: </b> <span>Promise</span></p>
-                    <p><b>Channel: </b> <span>Tech with Tim</span></p>
-                    <p><b>Location: </b> <span>Nigeria</span></p>
-                    <p><b>Subscribers: </b> <span>30000</span></p>
+                    <p><b>Title: </b>
+                        <span>{{ result['title'][0:40] }}...</span>
+                    </p>
+                    <p><b>Channel: </b> <span>{{ result['channel'] }}</span></p>
+                    <!-- <p><b>Location: </b> <span>Nigeria</span></p> -->
+                    <p><b>Subscribers: </b> <span>{{ result['subscribers'] }}</span></p>
                 </div>
             </div>
-            <div class="post-item">
-                <div class="post-img">
-                    <img src="../static/images/img_2.jpg" alt="">
-                </div>
-                <div class="post-info">
-                    <p><b>Title: </b> <span>Promise</span></p>
-                    <p><b>Channel: </b> <span>Tech with Tim</span></p>
-                    <p><b>Location: </b> <span>Nigeria</span></p>
-                    <p><b>Subscribers: </b> <span>30000</span></p>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-img">
-                    <img src="../static/images/img_1.jpg" alt="">
-                </div>
-                <div class="post-info">
-                    <p><b>Title: </b> <span>Promise</span></p>
-                    <p><b>Channel: </b> <span>Tech with Tim</span></p>
-                    <p><b>Location: </b> <span>Nigeria</span></p>
-                    <p><b>Subscribers: </b> <span>30000</span></p>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-img">
-                    <img src="../static/images/img_1.jpg" alt="">
-                </div>
-                <div class="post-info">
-                    <p><b>Title: </b> <span>Promise</span></p>
-                    <p><b>Channel: </b> <span>Tech with Tim</span></p>
-                    <p><b>Location: </b> <span>Nigeria</span></p>
-                    <p><b>Subscribers: </b> <span>30000</span></p>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-img">
-                    <img src="../static/images/img_2.jpg" alt="">
-                </div>
-                <div class="post-info">
-                    <p><b>Title: </b> <span>Promise</span></p>
-                    <p><b>Channel: </b> <span>Tech with Tim</span></p>
-                    <p><b>Location: </b> <span>Nigeria</span></p>
-                    <p><b>Subscribers: </b> <span>30000</span></p>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-img">
-                    <img src="../static/images/img_1.jpg" alt="">
-                </div>
-                <div class="post-info">
-                    <p><b>Title: </b> <span>Promise</span></p>
-                    <p><b>Channel: </b> <span>Tech with Tim</span></p>
-                    <p><b>Location: </b> <span>Nigeria</span></p>
-                    <p><b>Subscribers: </b> <span>30000</span></p>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-img">
-                    <img src="../static/images/img_1.jpg" alt="">
-                </div>
-                <div class="post-info">
-                    <p><b>Title: </b> <span>Promise</span></p>
-                    <p><b>Channel: </b> <span>Tech with Tim</span></p>
-                    <p><b>Location: </b> <span>Nigeria</span></p>
-                    <p><b>Subscribers: </b> <span>30000</span></p>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-img">
-                    <img src="../static/images/img_2.jpg" alt="">
-                </div>
-                <div class="post-info">
-                    <p><b>Title: </b> <span>Promise</span></p>
-                    <p><b>Channel: </b> <span>Tech with Tim</span></p>
-                    <p><b>Location: </b> <span>Nigeria</span></p>
-                    <p><b>Subscribers: </b> <span>30000</span></p>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-img">
-                    <img src="../static/images/img_1.jpg" alt="">
-                </div>
-                <div class="post-info">
-                    <p><b>Title: </b> <span>Promise</span></p>
-                    <p><b>Channel: </b> <span>Tech with Tim</span></p>
-                    <p><b>Location: </b> <span>Nigeria</span></p>
-                    <p><b>Subscribers: </b> <span>30000</span></p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
-{% endblock content %}
+{% endblock content %} {% block script %}
+<script>
+    AOS.init({
+        duration: 2000
+    })
+</script>
+{% endblock script %}
