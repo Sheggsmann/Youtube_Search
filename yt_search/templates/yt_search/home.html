@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}DM Sniper{% endblock title %}
+
+{% block content %}
+    <div class="search-section">
+        <h1 class="pb-2">SEARCH</h1>
+
+        <div class="row space-between">
+            <form action="/search/" method="GET">
+                <div class="s-item mb-2">
+                    <div class="search-item left">
+                        <div class="icon">
+                            <i class="ti-location-pin"></i>
+                        </div>
+                        <div class="info">
+                            <h3>Video Name</h3>
+                            <p>Enter a video name like american rappers</p>
+                        </div>
+                    </div>
+                    <div class="form-control right">
+                        <input type="text" name="video_name" placeholder="Enter Video Name" id="video-input" class="form-input">
+                    </div>
+                </div>
+                <div class="s-item mb-2">
+                    <div class="search-item left">
+                        <div class="icon">
+                            <i class="ti-email"></i>
+                        </div>
+                        <div class="info">
+                            <h3>Location</h3>
+                            <p>Enter a city like Chicago</p>
+                        </div>
+                    </div>
+                    <div class="form-control right">
+                        <input type="text" name="location" placeholder="Enter Location" id="location-input" required class="form-input" onfocus="geolocate()">
+                    </div>
+                </div>
+                <div class="s-item mb-2">
+                    <div class="search-item left">
+                        <div class="icon">
+                            <i class="ti-mobile"></i>
+                        </div>
+                        <div class="info">
+                            <h3>Subscribers</h3>
+                            <p>Choose a subscribers range</p>
+                        </div>
+                    </div>
+                    <input type="hidden" id="lat" name="lat" value="">
+                    <input type="hidden" id="lng" name="lng" value="">
+                    <div class="form-control right">
+                        <p>Subscribers</p>
+                        <div class="values">
+                            <span id="range-1">0</span>
+                            <span>&dash;</span>
+                            <span id="range-2">100</span>
+                        </div>
+                        <div class="range-slider">
+                            <div class="slider-track"></div>
+                            <input type="range" name="min" min="0" max="10000" id="slider-1" value="3000" oninput="slideOne()">
+                            <input type="range" name="max" min="0" max="10000" id="slider-2" value="7000" oninput="slideTwo()">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-control mt-2">
+                    <button type="button" id="submit-btn">Search</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <script>
+        let autoComplete;
+        let lat = document.querySelector('#lat')
+        let lng = document.querySelector('#lng')
+
+        function initAutocomplete() {
+            let locationInput = document.querySelector('#location-input')
+            autoComplete = new google.maps.places.Autocomplete(locationInput, {
+                types: ['geocode']
+            })
+            google.maps.event.addListener(autoComplete, 'place_changed', function() {
+                let nearPlace = autoComplete.getPlace()
+                place_location = nearPlace.geometry.location
+                console.log(place_location.lat(), place_location.lng())
+                lat.value = place_location.lat()
+                lng.value = place_location.lng()
+            })
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtHJLGKxFHUxv1iZ1cHUS9UvBdqEt0zBA&libraries=places&callback=initAutocomplete" async defer></script>
+{% endblock %}

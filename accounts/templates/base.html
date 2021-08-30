@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'register.css' %}">
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+</head>
+<body>
+    
+    <!-- Build out the navbar here -->
+
+    <header class="header py-1">
+        <div class="container">
+            <div class="row space-between align-center">
+                <div class="logo">
+                    <a href="">YoutubeSearch</a>
+                </div>
+                <div class="nav-toggle hide-desktop">
+                    <span></span>
+                    <span></span>
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li>
+                            <a href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'about' %}">About</a>
+                        </li>
+                        {% if not request.user.is_authenticated %}
+                            <li>
+                                <a href="{% url 'login' %}">Login</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'register' %}" class="btn btn-1">Sign Up</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                Hello, {{ request.user.username }}
+                            </li>
+                            <li>
+                                <a href="{% url 'logout' %}">Logout</a>
+                            </li>
+                        {% endif %}
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="alert-{{ message.tags }}">
+                    {{ message|safe }}
+                    <a href="#" class="close">x</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="container pt-3">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+    <script src="{% static 'general.js' %}"></script>
+    <script src="{% static 'main.js' %}"></script>
+    {% block script %}{% endblock %}
+</body>
+</html>
