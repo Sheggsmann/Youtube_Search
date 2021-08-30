@@ -33,12 +33,12 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
 
-SOCIAL_AUTH_FACEBOOK_KEY = '2989949947947183' # Facebook App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = '0ab4744163212a748b44ef336906c9f3' # Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_KEY = 'xxx' # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'xxx' # Facebook App Secret
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1002055279186-v0m1bfcn5mcptjd285h2g52k3cjo78jb.apps.googleusercontent.com' # Google Consumer Key
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'zK7OETWmol-R0RycJ3w3iqQi' # Google Consumer Secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'xxx' # Google Consumer Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'xxx' # Google Consumer Secret
 
 # Application definition
 
