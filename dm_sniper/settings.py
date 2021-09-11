@@ -33,12 +33,12 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
 
-SOCIAL_AUTH_FACEBOOK_KEY = 'xxx' # Facebook App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = 'xxx' # Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_KEY = '' # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '' # Facebook App Secret
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'xxx' # Google Consumer Key
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'xxx' # Google Consumer Secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '' # Google Consumer Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '' # Google Consumer Secret
 
 # Application definition
 

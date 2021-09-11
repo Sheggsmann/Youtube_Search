@@ -43,6 +43,9 @@
                             </li>
                         {% else %}
                             <li>
+                                <a href="{% url 'contacts' %}">Contacts</a>
+                            </li>    
+                            <li>
                                 Hello, {{ request.user.username }}
                             </li>
                             <li>

@@ -5,7 +5,6 @@ api_key = 'AIzaSyAtHJLGKxFHUxv1iZ1cHUS9UvBdqEt0zBA'
 
 class Youtube:
     min_results = 15
-    max_results = 500
     api_name = 'youtube'
 
 
@@ -39,6 +38,7 @@ class Youtube:
             data['video_link'] = video_link
             data['subscribers'] = int(channel['statistics'].get('subscriberCount', 0))
             data['video_id'] = video_id
+            data['channel_id'] = channel_id
 
             results.append(data)
         return results
@@ -53,13 +53,11 @@ class Youtube:
         return list(filter(lambda x: x['subscribers'] > min and x['subscribers'] <= max, results))
 
 
-    def search(self, param, location, min=0, max=10**10):
+    def search(self, param, location, min=0, max=10**10, max_results=500):
         result_list = []
-        search_args = dict(part="snippet", maxResults=self.max_results, q=param, type="video",
+        search_args = dict(part="snippet", maxResults=max_results, q=param, type="video",
             location=f"{str(location[0])},{str(location[1])}", locationRadius="10mi")
         if not all(location):
-
-            print('\n\n Removed locations \n\n')
             search_args.pop('location')
             search_args.pop('locationRadius')
         request = self.youtube.search().list(**search_args)

@@ -34,6 +34,16 @@
                     </p>
                     <p><b>Channel: </b> <span><a href="{{ result.channel_link }}" target="_blank">{{ result.channel }}</a></span></p>
                     <p><b>Subscribers: </b> <span>{{ result.subscribers }}</span></p>
+                    <p>
+                        {% if request.user.is_authenticated %}
+                            {% if result.contacted %}
+                                <button class="contact-btn contacted" disabled>Contacted</button>
+                            {% else %}
+                                <button class="contact-btn" onclick="contactChannel(this, '{{result.channel_id}}',
+                                '{{result.channel}}', '{{result.video_id}}')">Contact</button>
+                            {% endif %}
+                        {% endif %}
+                    </p>
                 </div>
             </div>
             {% endfor %}
@@ -60,5 +70,37 @@
         AOS.init({
             duration: 2000
         })
+
+        function getCookie(cname) {
+            let name = cname += '=';
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            
+            for (let i=0; i<ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return '';
+        }
+
+        function contactChannel(self, channel_id, channel_name, video_id) {
+            self.classList.add('contacted')
+            self.innerText = 'Contacted'
+            self.setAttribute('disabled', 'true')
+            const csrftoken = getCookie('csrftoken')
+            fetch(`/contact/${channel_id}/`, {
+                method: 'POST',
+                body: JSON.stringify({'channel_name': channel_name, 'video_id': video_id}),
+                headers: {'X-CSRFToken': csrftoken }
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+        }
+
     </script>
 {% endblock %}

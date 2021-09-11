@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table id="user-contacts">
+    <tr>
+      <th>Channel Name</th>
+      <th>Channel Link</th>
+      <th>Video Link</th>
+      <th>Date Contacted</th>
+    </tr>
+    
+    {% for contact in contacts %}
+        <tr>
+          <td>{{ contact.channel_name }}</td>
+          <td>{{ contact.channel_id }}</td>
+          <td>{{ contact.video_id }}</td>
+          <td>{{ contact.date_contacted }}</td>
+        </tr>
+    {% endfor %}
+
+  </table>
+{% endblock %}

@@ -13,6 +13,7 @@
     font-family: "Montserrat", sans-serif;
     box-sizing: border-box;
     outline: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -320,11 +321,11 @@ input[type="range"]::-webkit-slider-thumb {
 .post-item {
     position: relative;
     width: calc((100% / 3) - 20px);
-    height: 450px;
-    max-height: 450px;
+    height: 490px;
+    max-height: 490px;
     overflow: hidden;
     background: #e6e3e3;
-    margin-top: 2rem;
+    margin-top: 1.2rem;
     overflow: hidden;
     position: relative;
 }
@@ -334,12 +335,12 @@ input[type="range"]::-webkit-slider-thumb {
     top: 0;
     left: 0;
     width: 100%;
-    height: 74%;
+    height: 64%;
 }
 
 .post-item .post-info {
     position: absolute;
-    top: 74%;
+    top: 64%;
     left: 0;
     width: 100%;
     height: 26%;
@@ -348,6 +349,23 @@ input[type="range"]::-webkit-slider-thumb {
 
 .post-info p a {
     color: var(--dark);
+}
+
+.post-info .contact-btn {
+    padding: 7px 12px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: var(--main);
+    color: #fff;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 40px;
+    cursor: pointer;
+}
+
+.post-info .contact-btn.contacted {
+    background-color: grey;
 }
 
 .loader {
@@ -507,6 +525,34 @@ input[type="range"]::-webkit-slider-thumb {
     animation-timing-function: cubic-bezier;
     animation-iteration-count: infinite;
 }
+
+
+/* =================================
+Contacts Page Styles
+===================================*/
+#user-contacts {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#user-contacts td, #user-contacts th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#user-contacts tr:nth-child(even){background-color: #f2f2f2;}
+
+#user-contacts tr:hover {background-color: #ddd;}
+
+#user-contacts th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: var(--main);
+    color: white;
+}
+
+
 
 @media (max-width: 768px) {
     .nav {
